@@ -1,5 +1,6 @@
 package pieces;
 
+import board.Board;
 import board.Square;
 
 import java.awt.*;
@@ -38,7 +39,7 @@ public abstract class Piece {
         g.drawImage(this.image, this.currentSquare.getX(), this.currentSquare.getY(), null);
     }
 
-    public abstract List<Square> getLegalMoves();
+    public abstract List<Square> getLegalMoves(Board b);
 
     public boolean move(Square arrivalSquare) {
         Piece occupyingPiece = arrivalSquare.getOccupyingPiece();

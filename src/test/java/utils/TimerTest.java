@@ -28,7 +28,7 @@ public class TimerTest {
     }
 
    @Test
-    public void string(){
+    public void testToString(){
         Timer timer = new Timer(10, 0, 0);
         assertThat(timer).hasToString("10:00:00");
     }
