@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+/**
+ * The type Image loader.
+ */
 public class ImageLoader {
     private static BufferedImage img;
 

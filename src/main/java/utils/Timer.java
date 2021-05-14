@@ -1,20 +1,38 @@
 package utils;
 
+/**
+ * The type Timer.
+ */
 public class Timer {
     private int hh;
     private int mm;
     private int ss;
 
+    /**
+     * Instantiates a new Timer.
+     *
+     * @param hh the hh
+     * @param mm the mm
+     * @param ss the ss
+     */
     public Timer(int hh, int mm, int ss) {
         this.hh = hh;
         this.mm = mm;
         this.ss = ss;
     }
 
+    /**
+     * Is out of time boolean.
+     *
+     * @return the boolean
+     */
     public boolean isOutOfTime() {
         return (this.hh == 0 && this.mm == 0 && this.ss == 0);
     }
 
+    /**
+     * Decrement.
+     */
     public void decrement() {
         if (this.mm == 0 && this.ss == 0) {
             this.ss = 59;

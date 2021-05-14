@@ -1,7 +1,17 @@
 package pieces;
 
+/**
+ * The enum Piece color.
+ */
 public enum PieceColor {
-    BLACK("Black"), WHITE("White");
+    /**
+     * Black piece color.
+     */
+    BLACK("Black"),
+    /**
+     * White piece color.
+     */
+    WHITE("White");
 
     private final String name;
 
@@ -9,6 +19,11 @@ public enum PieceColor {
         this.name = name;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
