@@ -3,7 +3,7 @@ package utils;
 /**
  * The type Timer.
  */
-public class Timer {
+public class Clock {
     private int hh;
     private int mm;
     private int ss;
@@ -15,7 +15,7 @@ public class Timer {
      * @param mm the mm
      * @param ss the ss
      */
-    public Timer(int hh, int mm, int ss) {
+    public Clock(int hh, int mm, int ss) {
         this.hh = hh;
         this.mm = mm;
         this.ss = ss;

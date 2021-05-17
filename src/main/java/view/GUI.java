@@ -2,23 +2,26 @@ package view;
 
 
 import board.Board;
-import utils.Timer;
+import pieces.PieceColor;
+import utils.Clock;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * The type Gui.
  */
-public class GUI implements Runnable{
+public class GUI implements Runnable {
     /**
      * The Black timer.
      */
-    public Timer blackTimer;
+    public Clock blackClock;
     /**
      * The White timer.
      */
-    public Timer whiteTimer;
+    public Clock whiteClock;
     private JFrame gui;
     private Timer timer;
 
@@ -32,8 +35,8 @@ public class GUI implements Runnable{
      * @param mm the mm
      */
     public GUI(int hh, int ss, int mm) {
-        blackTimer = new Timer(hh, ss, mm);
-        whiteTimer = new Timer(hh, ss, mm);
+        blackClock = new Clock(hh, ss, mm);
+        whiteClock = new Clock(hh, ss, mm);
     }
 
     @Override
@@ -44,12 +47,32 @@ public class GUI implements Runnable{
 
         this.board = new Board(this);
         JPanel timerPanel = new JPanel(new BorderLayout());
-        timerPanel.add(new JLabel(blackTimer.toString()),BorderLayout.NORTH);
-        timerPanel.add(new JLabel(whiteTimer.toString()),BorderLayout.SOUTH);
+
+        JLabel blackTimerLabel = new JLabel(blackClock.toString());
+        JLabel whiteTimerLabel = new JLabel(whiteClock.toString());
+        blackTimerLabel.setFont(new Font("Arial", Font.BOLD, 40));
+        whiteTimerLabel.setFont(new Font("Arial", Font.BOLD, 40));
+        whiteTimerLabel.setForeground(Color.WHITE);
+        timerPanel.add(blackTimerLabel, BorderLayout.NORTH);
+        timerPanel.add(whiteTimerLabel, BorderLayout.SOUTH);
 
         gui.add(board, BorderLayout.CENTER);
-        gui.add(timerPanel,BorderLayout.EAST);
+        gui.add(timerPanel, BorderLayout.EAST);
 
+        timer = new Timer(1000, null);
+        timer.addActionListener(e -> {
+            PieceColor turn = board.getTurn();
+
+            if (turn.getName().equals("White")) {
+                whiteClock.decrement();
+                whiteTimerLabel.setText(whiteClock.toString());
+            } else {
+                blackClock.decrement();
+                blackTimerLabel.setText(blackClock.toString());
+            }
+
+        });
+        timer.start();
         // gui.pack();
         gui.setVisible(true);
         gui.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
