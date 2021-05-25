@@ -39,7 +39,7 @@ public class Board extends JPanel implements MouseListener {
                 int xMod = x % 2;
                 int yMod = y % 2;
 
-                //TODO: Fix x and y assignment //shotgun surgery with x and y
+                //shotgun surgery with x and y
                 if ((xMod == 0 && yMod == 0) || (xMod == 1 && yMod == 1)) {
                     board[x][y] = new Square(this, Color.WHITE, x, y);
                 } else {
@@ -81,7 +81,6 @@ public class Board extends JPanel implements MouseListener {
     The pawns are placed one square in front of all of the other pieces.
      */
     private void initializePieces() {
-        //TODO: Swap x and y
         //TODO: Optimize initialization / Remove double board declaration
         logger.info("Loading Kings...");
         board[4][0].putPiece(new King(PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_kdt60.png"), board[4][0]));
