@@ -1,7 +1,7 @@
 package board;
 
 import org.junit.Test;
-import view.GUI;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.awt.*;
 
@@ -10,14 +10,21 @@ import static org.assertj.core.api.Assertions.*;
 //Use Mocks maybe
 public class SquareTest {
 
+    private static Square sq;
+    @BeforeAll
+    public static void init(){
+         sq = new Square(new Board(), Color.WHITE,1,1);
+    }
+
     @Test
     public void getOccupyingPiece() {
-        Square sq = new Square(new Board(new GUI(100,0,0)), Color.WHITE,1,1);
-        assertThat(sq.isOccupied()).isFalse();
+        assertThat(sq.getOccupyingPiece()).isNull();
     }
 
     @Test
     public void isOccupied() {
+
+        assertThat(sq.isOccupied()).isFalse();
     }
 
     @Test
