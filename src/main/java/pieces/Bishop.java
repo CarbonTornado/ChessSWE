@@ -14,12 +14,18 @@ public class Bishop extends Piece{
      * @param image      the image
      * @param initSquare the init square
      */
-    protected Bishop(PieceColor color, BufferedImage image, Square initSquare) {
+    public Bishop(PieceColor color, BufferedImage image, Square initSquare) {
         super(color, image, initSquare);
     }
 
     @Override
     public List<Square> getLegalMoves(Board b) {
-        return null;
+
+        Square[][] squares = b.getSquares();
+
+        int x = this.getPosition().getXPos();
+        int y = this.getPosition().getYPos();
+
+        return getDiagMoves(squares,x,y);
     }
 }
