@@ -17,6 +17,6 @@ public class Game implements Runnable {
     }
 
     public void run() {
-        SwingUtilities.invokeLater(new GUI(10, 0,0));
+        SwingUtilities.invokeLater(new GUI(0, 10,0));
     }
 }

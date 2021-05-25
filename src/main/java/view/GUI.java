@@ -7,8 +7,6 @@ import utils.Clock;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * The type Gui.
@@ -17,11 +15,11 @@ public class GUI implements Runnable {
     /**
      * The Black timer.
      */
-    public Clock blackClock;
+    private Clock blackClock;
     /**
      * The White timer.
      */
-    public Clock whiteClock;
+    private Clock whiteClock;
     private JFrame gui;
     private Timer timer;
 
@@ -31,12 +29,12 @@ public class GUI implements Runnable {
      * Instantiates a new Gui.
      *
      * @param hh the hh
-     * @param ss the ss
      * @param mm the mm
+     * @param ss the ss
      */
-    public GUI(int hh, int ss, int mm) {
-        blackClock = new Clock(hh, ss, mm);
-        whiteClock = new Clock(hh, ss, mm);
+    public GUI(int hh, int mm, int ss) {
+        blackClock = new Clock(hh, mm, ss);
+        whiteClock = new Clock(hh, mm, ss);
     }
 
     @Override
@@ -45,7 +43,7 @@ public class GUI implements Runnable {
         gui.setResizable(false);
         gui.setSize(1600, 800);
 
-        this.board = new Board(this);
+        this.board = new Board();
         JPanel timerPanel = new JPanel(new BorderLayout());
 
         JLabel blackTimerLabel = new JLabel(blackClock.toString());
@@ -73,7 +71,6 @@ public class GUI implements Runnable {
 
         });
         timer.start();
-        // gui.pack();
         gui.setVisible(true);
         gui.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
