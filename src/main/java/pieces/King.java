@@ -35,18 +35,13 @@ public class King extends Piece {
         int x = this.getPosition().getXPos();
         int y = this.getPosition().getYPos();
 
-        for (int xOffset = 1; xOffset > -2; xOffset--) {
-            for (int yOffset = 1; yOffset > -2; yOffset--) {
-                if (!(xOffset == 0 && yOffset == 0)) {
-                    try {
-                        if (!squares[y + yOffset][x + xOffset].isOccupied() ||
-                                squares[y + yOffset][x + xOffset].getOccupyingPiece().getColor()
-                                        != this.getColor()) {
-                            legalMoves.add(squares[y + yOffset][x + xOffset]);
-                        }
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        //TODO: Change Approach
-                        continue;
+        for (int xOffset = 1; xOffset >= -1; xOffset--) {
+            for (int yOffset = 1; yOffset >= -1; yOffset--) {
+                if ((x + xOffset >= 0 && y + yOffset >= 0) && (x + xOffset < squares.length && y + yOffset < squares.length)) {
+                    if (!squares[x + xOffset][y + yOffset].isOccupied() ||
+                            squares[x + xOffset][y + yOffset].getOccupyingPiece().getColor()
+                                    != this.getColor()) {
+                        legalMoves.add(squares[x + xOffset][y + yOffset]);
                     }
                 }
             }
