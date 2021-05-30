@@ -23,6 +23,7 @@ public class Board extends JPanel implements MouseListener {
     private Piece currPiece;
     private int currX;
     private int currY;
+    private PieceFactory pieceFactory = new PieceFactory();
 
     /**
      * Instantiates a new Board.
@@ -81,39 +82,44 @@ public class Board extends JPanel implements MouseListener {
     The pawns are placed one square in front of all of the other pieces.
      */
     private void initializePieces() {
-        //TODO: Optimize initialization / Remove double board declaration
         logger.info("Loading Kings...");
-        board[4][0].putPiece(new King(PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_kdt60.png"), board[4][0]));
-        board[4][7].putPiece(new King(PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_klt60.png"), board[4][7]));
-
-        board[3][0].putPiece(new Queen(PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_qdt60.png"), board[3][0]));
-        board[3][7].putPiece(new Queen(PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_qlt60.png"), board[3][7]));
-
-        board[0][0].putPiece(new Rook(PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_rdt60.png"), board[0][0]));
-        board[7][0].putPiece(new Rook(PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_rdt60.png"), board[7][0]));
-        board[0][7].putPiece(new Rook(PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_rlt60.png"), board[0][7]));
-        board[7][7].putPiece(new Rook(PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_rlt60.png"), board[7][7]));
-
-        board[2][0].putPiece(new Bishop(PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_bdt60.png"), board[2][0]));
-        board[5][0].putPiece(new Bishop(PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_bdt60.png"), board[5][0]));
-        board[2][7].putPiece(new Bishop(PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_blt60.png"), board[2][7]));
-        board[5][7].putPiece(new Bishop(PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_blt60.png"), board[5][7]));
-
-        board[1][0].putPiece(new Knight(PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_ndt60.png"), board[1][0]));
-        board[6][0].putPiece(new Knight(PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_ndt60.png"), board[6][0]));
-        board[1][7].putPiece(new Knight(PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_nlt60.png"), board[1][7]));
-        board[6][7].putPiece(new Knight(PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_nlt60.png"), board[6][7]));
-
-        for (int i = 0; i < 8; i++) {
-            board[i][1].putPiece(new Pawn(PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_pdt60.png"), board[i][1]));
-            board[i][6].putPiece(new Pawn(PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_plt60.png"), board[i][6]));
-        }
+        initializeConcretePiece("King",4,1);
+        logger.info("Loading Queens...");
+        initializeConcretePiece("Queen",3,1);
+        logger.info("Loading Knights...");
+        initializeConcretePiece("Knight",6,2);
+        logger.info("Loading Rooks...");
+        initializeConcretePiece("Rook",7,2);
+        logger.info("Loading Bishops...");
+        initializeConcretePiece("Bishop",5,2);
+        logger.info("Loading Pawns...");
+        initializePawns();
 
         //Initialize all Pieces on the board
         for (int x = 0; x < 8; x++) {
             for (int y = 0; y < 8; y++) {
                 pieces.add(board[x][y].getOccupyingPiece());
                 // logger.info(String.format("X:%d Y:%d Piece:%s%n",x,y,board[x][y].getOccupyingPiece()));
+            }
+        }
+    }
+
+    private void initializePawns() {
+        for (int i = 0; i < 8; i++) {
+            board[i][1].putPiece(pieceFactory.getPiece("Pawn",PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_pdt60.png"), board[i][1]));
+            board[i][6].putPiece(pieceFactory.getPiece("Pawn",PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_plt60.png"), board[i][6]));
+        }
+    }
+
+    public void initializeConcretePiece(String pieceName, int xCoords, int amountPerPlayer){
+        int index = 0;
+        if(pieceName.equalsIgnoreCase("knight")) index++;
+        for (int i = 0; i < amountPerPlayer; i++) {
+            board[xCoords][7].putPiece(pieceFactory.getPiece(pieceName,PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_"+pieceName.toLowerCase().charAt(index)+"lt60.png"), board[xCoords][7]));
+            board[xCoords][0].putPiece(pieceFactory.getPiece(pieceName,PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_"+pieceName.toLowerCase().charAt(index)+"dt60.png"), board[xCoords][0]));
+            if(i == 1){
+                board[Math.abs(7-xCoords)][7].putPiece(pieceFactory.getPiece(pieceName,PieceColor.WHITE, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_"+pieceName.toLowerCase().charAt(index)+"lt60.png"), board[Math.abs(7-xCoords)][7]));
+                board[Math.abs(7-xCoords)][0].putPiece(pieceFactory.getPiece(pieceName,PieceColor.BLACK, ImageLoader.loadImage(System.getProperty("user.dir") + "/src/main/resources/Chess_"+pieceName.toLowerCase().charAt(index)+"dt60.png"), board[Math.abs(7-xCoords)][0]));
             }
         }
     }
