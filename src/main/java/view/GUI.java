@@ -3,7 +3,7 @@ package view;
 
 import board.Board;
 import pieces.PieceColor;
-import utils.Clock;
+import utils.ChessClock;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,11 +15,11 @@ public class GUI implements Runnable {
     /**
      * The Black timer.
      */
-    private Clock blackClock;
+    private ChessClock blackChessClock;
     /**
      * The White timer.
      */
-    private Clock whiteClock;
+    private ChessClock whiteChessClock;
     private JFrame gui;
     private Timer timer;
 
@@ -33,8 +33,8 @@ public class GUI implements Runnable {
      * @param ss the ss
      */
     public GUI(int hh, int mm, int ss) {
-        blackClock = new Clock(hh, mm, ss);
-        whiteClock = new Clock(hh, mm, ss);
+        blackChessClock = new ChessClock(hh, mm, ss);
+        whiteChessClock = new ChessClock(hh, mm, ss);
     }
 
     @Override
@@ -46,8 +46,8 @@ public class GUI implements Runnable {
         this.board = new Board();
         JPanel timerPanel = new JPanel(new BorderLayout());
 
-        JLabel blackTimerLabel = new JLabel(blackClock.toString());
-        JLabel whiteTimerLabel = new JLabel(whiteClock.toString());
+        JLabel blackTimerLabel = new JLabel(blackChessClock.toString());
+        JLabel whiteTimerLabel = new JLabel(whiteChessClock.toString());
         blackTimerLabel.setFont(new Font("Arial", Font.BOLD, 40));
         whiteTimerLabel.setFont(new Font("Arial", Font.BOLD, 40));
         whiteTimerLabel.setForeground(Color.WHITE);
@@ -62,11 +62,11 @@ public class GUI implements Runnable {
             PieceColor turn = board.getTurn();
 
             if (turn.getName().equals("White")) {
-                whiteClock.decrement();
-                whiteTimerLabel.setText(whiteClock.toString());
+                whiteChessClock.decrement();
+                whiteTimerLabel.setText(whiteChessClock.toString());
             } else {
-                blackClock.decrement();
-                blackTimerLabel.setText(blackClock.toString());
+                blackChessClock.decrement();
+                blackTimerLabel.setText(blackChessClock.toString());
             }
 
         });
