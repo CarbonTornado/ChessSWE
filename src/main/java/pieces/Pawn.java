@@ -36,22 +36,13 @@ public class Pawn extends Piece {
 
         int x = this.getPosition().getXPos();
         int y = this.getPosition().getYPos();
-        //Code Smell Duplicate code
-        if (this.getColor() == PieceColor.WHITE){
-            if (positionIsInitial) {
-                legalMoves.add(squares[x][y-2]);
-            }
-            if (!squares[x][y-1].isOccupied()){
-                legalMoves.add(squares[x][y-1]);
-            }
+        int yOffset = 1;
+        if(this.getColor() == PieceColor.BLACK) yOffset = -yOffset;
+        if (positionIsInitial) {
+            legalMoves.add(squares[x][y - 2*yOffset]);
         }
-        else{
-            if (positionIsInitial) {
-                legalMoves.add(squares[x][y+2]);
-            }
-            if (!squares[x][y+1].isOccupied()) {
-                legalMoves.add(squares[x][y+1]);
-            }
+        if (!squares[x][y - yOffset].isOccupied()) {
+            legalMoves.add(squares[x][y - yOffset]);
         }
         return legalMoves;
     }
