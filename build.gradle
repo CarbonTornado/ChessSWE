@@ -1,7 +1,7 @@
 plugins {
     id 'java'
+    id 'jacoco'
 }
-
 group 'org.example'
 version '1.0-SNAPSHOT'
 
@@ -9,10 +9,25 @@ repositories {
     mavenCentral()
 }
 
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/jacoco")
+}
+
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
+
 dependencies {
     implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
     implementation 'org.jetbrains:annotations:19.0.0'
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:2.7.22'
+    testCompile "org.powermock:powermock-core:1.7.3"
+    testCompile "org.powermock:powermock-module-junit4:1.7.3"
+    testCompile "org.powermock:powermock-api-mockito2:1.7.3"
     testCompile 'org.assertj:assertj-core:3.11.1'
 }
