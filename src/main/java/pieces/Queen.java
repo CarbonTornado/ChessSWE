@@ -32,20 +32,6 @@ public class Queen extends Piece{
         legalMoves = Stream.concat(getDiagMoves(squares,x,y).stream(), getStraightMoves(squares,x,y).stream())
                 .collect(Collectors.toList());
 
-
-        //TODO: Check for blockage
-     /*   for (int xOffset = squares.length; xOffset >= -squares.length; xOffset--) {
-            for (int yOffset = squares.length; yOffset >= -squares.length; yOffset--) {
-                if ((x + xOffset >= 0 && y + yOffset >= 0) && (x + xOffset < squares.length && y + yOffset < squares.length)) {
-                    if (!squares[x + xOffset][y + yOffset].isOccupied() ||
-                            squares[x + xOffset][y + yOffset].getOccupyingPiece().getColor()
-                                    != this.getColor()) {
-                        legalMoves.add(squares[x + xOffset][y + yOffset]);
-                    }
-                }
-            }
-        } */
-
         return legalMoves;
     }
 }
