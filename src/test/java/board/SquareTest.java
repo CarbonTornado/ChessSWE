@@ -7,7 +7,6 @@ import java.awt.*;
 
 import static org.assertj.core.api.Assertions.*;
 
-//Use Mocks maybe
 public class SquareTest {
 
     private static Square sq;
@@ -29,21 +28,26 @@ public class SquareTest {
 
     @Test
     public void putPiece() {
+        assertThat(sq.getOccupyingPiece()).isNull();
     }
 
     @Test
     public void removePiece() {
+        assertThat(sq.getOccupyingPiece()).isNull();
     }
 
     @Test
     public void capture() {
+        assertThat(sq.getOccupyingPiece()).isNull();
     }
 
     @Test
     public void getXPos() {
+        assertThat(sq.getOccupyingPiece()).isNull();
     }
 
     @Test
     public void getYPos() {
+        assertThat(sq.getOccupyingPiece()).isNull();
     }
 }
